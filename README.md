@@ -1,8 +1,10 @@
 ## Maintenance Window Creator - CLI
 
+NOTE: This is an under construction project created primarily for testing the Bashly framework and some bash/shell script regex exercises.
+
 This CLI can create/list/delete a maintenance window in our alert systems, it's working on Site24x7, New Relic, Zabbix and Instana.
 
-This is an under construction project created primarily for testing the Bashly framwork and some bash/shell script regex exercises.
+
 
 
 ### Proposal
@@ -14,6 +16,7 @@ Written using the bashly framework (in ruby) which allows you to use bash/shell 
 
 In the environment are used some different monitoring systems, the goal with this CLI is to identify by regex in which of the systems there is monitoring of the app in delivery and perform the creation of the maintenance window.
 
+### Using
 
 ```
 Usage:
