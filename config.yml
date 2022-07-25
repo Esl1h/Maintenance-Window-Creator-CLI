@@ -1,0 +1,17 @@
+slack:
+  teste: "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/xxxxxxxxxxxxxxx"
+
+instana:
+  apitoken: "XXXXXXXXX"
+
+site24x7:
+  clientid: "1000.XXXXXXXXX"
+  clientsecret: "XXXXXXXXX"
+  code: "1000.XXXXXXXXX.xxxxxxxxxxxxxxx" #scope - remover do config
+  refreshtoken: "1000.YYYYYYYYYYYY.yyyyyyyyyyyyyyyyyyy"
+  accesstoken: # 1 hour duration
+
+zabbix:
+  user: "login.username"
+  password: "user@passwd"
+  url: "zabbix.endpoint.fqdn"

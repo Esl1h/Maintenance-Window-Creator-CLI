@@ -1,0 +1,159 @@
+name: maintenance-window
+help: Maintenance Window Creator CLI
+version: 0.1.8
+extensible: true
+
+environment_variables:
+- name: api_key
+  help: Set your API key
+
+
+commands:
+- name: create
+  short: c
+  help: commands to create a maintenance window
+  commands:
+
+  - name: instana
+    short: i
+    help: create a instana maintenance window
+    args:
+    - name: SERVICE_NAME
+      help: create maintenance window
+      required: true
+    - name: START_TIME
+      required: true
+      help: timestamp to start window
+    - name: END_TIME
+      required: true
+      help: set the timestamp to stop a maintenance window
+    flags:
+    - long: --force
+      short: -f
+      help: Overwrite existing files
+    examples:
+    - maintenance-window create instana service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm
+    - maintenance-window create instana app-name 26-12-2022_20:00 26-12-2022_21:30
+    environment_variables:
+    - name: TESTE
+      help: Set the service name of API to maintenance window
+      default: Esl1h-instana
+
+  - name: site24x7
+    short: s
+    help: create a site24x7 maintenance window
+    args:
+    - name: SERVICE_NAME
+      help: create maintenance window
+      required: true
+    - name: START_TIME
+      required: true
+      help: timestamp to start window
+    - name: END_TIME
+      required: true
+      help: set the timestamp to stop a maintenance window
+    flags:
+    - long: --force
+      short: -f
+      help: Overwrite existing files
+    examples:
+    - maintenance-window create site24x7 service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm
+    - maintenance-window create site24x7 app-name 26-12-2022_20:00 26-12-2022_21:30
+
+  - name: zabbix
+    short: z
+    help: create a zabbix maintenance window
+    args:
+    - name: SERVICE_NAME
+      help: create maintenance window
+      required: true
+    - name: START_TIME
+      required: true
+      help: timestamp to start window
+    - name: END_TIME
+      required: true
+      help: set the timestamp to stop a maintenance window
+    flags:
+    - long: --force
+      short: -f
+      help: Overwrite existing files
+    examples:
+    - maintenance-window create zabbix service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm
+    - maintenance-window create zabbix app-name 26-12-2022_20:00 26-12-2022_21:30
+
+
+- name: delete
+  short: d
+  help: commands to delete a maintenance window
+  commands:
+  - name: instana
+    short: i
+    help: delete a instana maintenance window
+    args:
+    - name: SERVICE_NAME
+      help: delete maintenance window
+      required: true
+    - name: START_TIME
+      required: true
+      help: timestamp to start window
+    - name: END_TIME
+      required: true
+      help: set the timestamp to stop a maintenance window
+    examples:
+    - maintenance-window delete instana service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm
+    - maintenance-window delete instana app-name 26-12-2022_20:00 26-12-2022_21:30
+    environment_variables:
+    - name: TESTE
+      help: Set the service name of API to maintenance window
+      default: Esl1h-delete-instana
+
+  - name: site24x7
+    short: s
+    help: delete a site24x7 maintenance window
+    args:
+    - name: SERVICE_NAME
+      help: create maintenance window
+      required: true
+    - name: START_TIME
+      required: true
+      help: timestamp to start window
+    - name: END_TIME
+      required: true
+      help: set the timestamp to stop a maintenance window
+    examples:
+    - maintenance-window delete site24x7 service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm
+    - maintenance-window delete site24x7 app-name 26-12-2022_20:00 26-12-2022_21:30
+
+  - name: zabbix
+    short: z
+    help: delete a zabbix maintenance window
+    args:
+    - name: SERVICE_NAME
+      help: create maintenance window
+      required: true
+    - name: START_TIME
+      required: true
+      help: timestamp to start window
+    - name: END_TIME
+      required: true
+      help: set the timestamp to stop a maintenance window
+    examples:
+    - maintenance-window delete zabbix service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm
+    - maintenance-window delete zabbix app-name 26-12-2022_20:00 26-12-2022_21:30
+
+- name: list
+  short: ls
+  help: commands to list all the maintenance windows
+  commands:
+  - name: instana
+    help: list a instana maintenance window
+    examples:
+    - maintenance-window list instana
+  - name: site24x7
+    help: list a site24x7 maintenance window
+    examples:
+    - maintenance-window list site24x7
+  - name: zabbix
+    help: list a zabbix maintenance window
+    examples:
+    - maintenance-window list zabbix

@@ -1,0 +1,1971 @@
+#!/usr/bin/env bash
+
+# :command.version_command
+version_command() {
+  echo "$version"
+}
+
+# :command.usage
+maintenance-window_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window - Maintenance Window Creator CLI\n"
+    echo 
+  else
+    printf "maintenance-window - Maintenance Window Creator CLI\n"
+    echo 
+  fi
+
+  printf "Usage:\n"
+  printf "  maintenance-window [command]\n"
+  printf "  maintenance-window [command] --help | -h\n"
+  printf "  maintenance-window --version | -v\n"
+  echo
+  # :command.usage_commands
+  printf "Commands:\n"
+  echo "  create   commands to create a maintenance window"
+  echo "  delete   commands to delete a maintenance window"
+  echo "  list     commands to list all the maintenance windows"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+    echo "  --version, -v"
+    printf "    Show version number\n"
+    echo
+
+    # :command.usage_environment_variables
+    printf "Environment Variables:\n"
+    
+    # :environment_variable.usage
+    echo "  API_KEY"
+    printf "    Set your API key\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_create_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window create - commands to create a maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window create - commands to create a maintenance window\n"
+    echo 
+  fi
+
+  printf "Shortcut: c\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window create [command]\n"
+  printf "  maintenance-window create [command] --help | -h\n"
+  echo
+  # :command.usage_commands
+  printf "Commands:\n"
+  echo "  instana    create a instana maintenance window"
+  echo "  site24x7   create a site24x7 maintenance window"
+  echo "  zabbix     create a zabbix maintenance window"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_create_instana_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window create instana - create a instana maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window create instana - create a instana maintenance window\n"
+    echo 
+  fi
+
+  printf "Shortcut: i\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window create instana SERVICE_NAME START_TIME END_TIME [options]\n"
+  printf "  maintenance-window create instana --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+    # :command.usage_flags
+    # :flag.usage
+    echo "  --force, -f"
+    printf "    Overwrite existing files\n"
+    echo
+    # :command.usage_args
+    printf "Arguments:\n"
+    
+    # :argument.usage
+    echo "  SERVICE_NAME"
+    printf "    create maintenance window\n"
+    echo
+    
+    # :argument.usage
+    echo "  START_TIME"
+    printf "    timestamp to start window\n"
+    echo
+    
+    # :argument.usage
+    echo "  END_TIME"
+    printf "    set the timestamp to stop a maintenance window\n"
+    echo
+    # :command.usage_environment_variables
+    printf "Environment Variables:\n"
+    
+    # :environment_variable.usage
+    echo "  TESTE"
+    printf "    Set the service name of API to maintenance window\n"
+    printf "    Default: Esl1h-instana\n"
+    echo
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window create instana service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm\n"
+    printf "  maintenance-window create instana app-name 26-08-2021_20:00 26-08-2021_21:30\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_create_site24x7_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window create site24x7 - create a site24x7 maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window create site24x7 - create a site24x7 maintenance window\n"
+    echo 
+  fi
+
+  printf "Shortcut: s\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window create site24x7 SERVICE_NAME START_TIME END_TIME [options]\n"
+  printf "  maintenance-window create site24x7 --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+    # :command.usage_flags
+    # :flag.usage
+    echo "  --force, -f"
+    printf "    Overwrite existing files\n"
+    echo
+    # :command.usage_args
+    printf "Arguments:\n"
+    
+    # :argument.usage
+    echo "  SERVICE_NAME"
+    printf "    create maintenance window\n"
+    echo
+    
+    # :argument.usage
+    echo "  START_TIME"
+    printf "    timestamp to start window\n"
+    echo
+    
+    # :argument.usage
+    echo "  END_TIME"
+    printf "    set the timestamp to stop a maintenance window\n"
+    echo
+
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window create site24x7 service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm\n"
+    printf "  maintenance-window create site24x7 app-name 26-08-2021_20:00 26-08-2021_21:30\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_create_zabbix_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window create zabbix - create a zabbix maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window create zabbix - create a zabbix maintenance window\n"
+    echo 
+  fi
+
+  printf "Shortcut: z\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window create zabbix SERVICE_NAME START_TIME END_TIME [options]\n"
+  printf "  maintenance-window create zabbix --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+    # :command.usage_flags
+    # :flag.usage
+    echo "  --force, -f"
+    printf "    Overwrite existing files\n"
+    echo
+    # :command.usage_args
+    printf "Arguments:\n"
+    
+    # :argument.usage
+    echo "  SERVICE_NAME"
+    printf "    create maintenance window\n"
+    echo
+    
+    # :argument.usage
+    echo "  START_TIME"
+    printf "    timestamp to start window\n"
+    echo
+    
+    # :argument.usage
+    echo "  END_TIME"
+    printf "    set the timestamp to stop a maintenance window\n"
+    echo
+
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window create zabbix service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm\n"
+    printf "  maintenance-window create zabbix app-name 26-08-2021_20:00 26-08-2021_21:30\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_delete_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window delete - commands to delete a maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window delete - commands to delete a maintenance window\n"
+    echo 
+  fi
+
+  printf "Shortcut: d\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window delete [command]\n"
+  printf "  maintenance-window delete [command] --help | -h\n"
+  echo
+  # :command.usage_commands
+  printf "Commands:\n"
+  echo "  instana    delete a instana maintenance window"
+  echo "  site24x7   delete a site24x7 maintenance window"
+  echo "  zabbix     delete a zabbix maintenance window"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_delete_instana_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window delete instana - delete a instana maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window delete instana - delete a instana maintenance window\n"
+    echo 
+  fi
+
+  printf "Shortcut: i\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window delete instana SERVICE_NAME START_TIME END_TIME\n"
+  printf "  maintenance-window delete instana --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_args
+    printf "Arguments:\n"
+    
+    # :argument.usage
+    echo "  SERVICE_NAME"
+    printf "    delete maintenance window\n"
+    echo
+    
+    # :argument.usage
+    echo "  START_TIME"
+    printf "    timestamp to start window\n"
+    echo
+    
+    # :argument.usage
+    echo "  END_TIME"
+    printf "    set the timestamp to stop a maintenance window\n"
+    echo
+    # :command.usage_environment_variables
+    printf "Environment Variables:\n"
+    
+    # :environment_variable.usage
+    echo "  TESTE"
+    printf "    Set the service name of API to maintenance window\n"
+    printf "    Default: Esl1h-delete-instana\n"
+    echo
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window delete instana service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm\n"
+    printf "  maintenance-window delete instana app-name 26-08-2021_20:00 26-08-2021_21:30\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_delete_site24x7_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window delete site24x7 - delete a site24x7 maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window delete site24x7 - delete a site24x7 maintenance window\n"
+    echo 
+  fi
+
+  printf "Shortcut: s\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window delete site24x7 SERVICE_NAME START_TIME END_TIME\n"
+  printf "  maintenance-window delete site24x7 --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_args
+    printf "Arguments:\n"
+    
+    # :argument.usage
+    echo "  SERVICE_NAME"
+    printf "    create maintenance window\n"
+    echo
+    
+    # :argument.usage
+    echo "  START_TIME"
+    printf "    timestamp to start window\n"
+    echo
+    
+    # :argument.usage
+    echo "  END_TIME"
+    printf "    set the timestamp to stop a maintenance window\n"
+    echo
+
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window delete site24x7 service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm\n"
+    printf "  maintenance-window delete site24x7 app-name 26-08-2021_20:00 26-08-2021_21:30\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_delete_zabbix_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window delete zabbix - delete a zabbix maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window delete zabbix - delete a zabbix maintenance window\n"
+    echo 
+  fi
+
+  printf "Shortcut: z\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window delete zabbix SERVICE_NAME START_TIME END_TIME\n"
+  printf "  maintenance-window delete zabbix --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_args
+    printf "Arguments:\n"
+    
+    # :argument.usage
+    echo "  SERVICE_NAME"
+    printf "    create maintenance window\n"
+    echo
+    
+    # :argument.usage
+    echo "  START_TIME"
+    printf "    timestamp to start window\n"
+    echo
+    
+    # :argument.usage
+    echo "  END_TIME"
+    printf "    set the timestamp to stop a maintenance window\n"
+    echo
+
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window delete zabbix service-name dd-mm-aaaa_hh:mm dd-mm-aaaa_hh:mm\n"
+    printf "  maintenance-window delete zabbix app-name 26-08-2021_20:00 26-08-2021_21:30\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_list_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window list - commands to list all the maintenance windows\n"
+    echo 
+  else
+    printf "maintenance-window list - commands to list all the maintenance windows\n"
+    echo 
+  fi
+
+  printf "Shortcut: ls\n"
+  echo
+
+  printf "Usage:\n"
+  printf "  maintenance-window list [command]\n"
+  printf "  maintenance-window list [command] --help | -h\n"
+  echo
+  # :command.usage_commands
+  printf "Commands:\n"
+  echo "  instana    list a instana maintenance window"
+  echo "  site24x7   list a site24x7 maintenance window"
+  echo "  zabbix     list a zabbix maintenance window"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_list_instana_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window list instana - list a instana maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window list instana - list a instana maintenance window\n"
+    echo 
+  fi
+
+  printf "Usage:\n"
+  printf "  maintenance-window list instana\n"
+  printf "  maintenance-window list instana --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window list instana\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_list_site24x7_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window list site24x7 - list a site24x7 maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window list site24x7 - list a site24x7 maintenance window\n"
+    echo 
+  fi
+
+  printf "Usage:\n"
+  printf "  maintenance-window list site24x7\n"
+  printf "  maintenance-window list site24x7 --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window list site24x7\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+maintenance-window_list_zabbix_usage() {
+  if [[ -n $long_usage ]]; then
+    printf "maintenance-window list zabbix - list a zabbix maintenance window\n"
+    echo 
+  else
+    printf "maintenance-window list zabbix - list a zabbix maintenance window\n"
+    echo 
+  fi
+
+  printf "Usage:\n"
+  printf "  maintenance-window list zabbix\n"
+  printf "  maintenance-window list zabbix --help | -h\n"
+  echo
+
+  if [[ -n $long_usage ]]; then
+    printf "Options:\n"
+    # :command.usage_fixed_flags
+    echo "  --help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_examples
+    printf "Examples:\n"
+    
+    printf "  maintenance-window list zabbix\n"
+    echo
+
+  fi
+}
+
+# :command.inspect_args
+inspect_args() {
+  readarray -t sorted_keys < <(printf '%s\n' "${!args[@]}" | sort)
+  if (( ${#args[@]} )); then
+    echo args:
+    for k in "${sorted_keys[@]}"; do echo "- \${args[$k]} = ${args[$k]}"; done
+  else
+    echo args: none
+  fi
+
+  if (( ${#other_args[@]} )); then
+    echo
+    echo other_args:
+    echo "- \${other_args[*]} = ${other_args[*]}"
+    for i in "${!other_args[@]}"; do
+      echo "- \${other_args[$i]} = ${other_args[$i]}"
+    done
+  fi
+}
+
+# :command.user_lib
+# :src/lib/parse_yaml.sh
+#!/bin/bash
+function parse_yaml {
+    local prefix=$2
+    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+    sed -ne "s|^\($s\):|\1|" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+    awk -F$fs '{
+        indent = length($1)/2;
+        vname[indent] = $2;
+        for (i in vname) {if (i > indent) {delete vname[i]}}
+        if (length($3) > 0) {
+            vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+            printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+        }
+    }'
+}
+
+# :src/lib/site24x7token.sh
+#!/bin/bash
+function getacesstoken {
+curl -s https://accounts.zoho.com/oauth/v2/token \
+        -X POST \
+        -d "client_id=$CONFIG_site24x7_clientid" \
+        -d "client_secret=$CONFIG_site24x7_clientsecret" \
+        -d "refresh_token=$CONFIG_site24x7_refreshtoken"\
+        -d "grant_type=refresh_token"
+}
+
+# :src/lib/slackmessagecreated.sh
+#!/bin/bash
+
+# :src/lib/zabbixtoken.sh
+#!/bin/bash
+function getlogintoken {
+curl -s "$CONFIG_zabbix_url"/api_jsonrpc.php \
+        -H "Content-Type: application/json" \
+        --data '{
+                "jsonrpc": "2.0",
+                "method": "user.login",
+                "params": {
+                "user": "'"$CONFIG_zabbix_user"'",
+                "password": "'"$CONFIG_zabbix_password"'"
+                },
+                "id": 1,
+                "auth": null
+                }'
+}
+
+# :command.command_functions
+
+# :command.function
+maintenance-window_create_instana_command() {
+  # :src/create_instana_command.sh
+  # mapfile APIS_ARRAY <API.list
+  # #echo "${APIS_ARRAY[@]}"
+  # #printf "${APIS_ARRAY[@]}"
+  # #printf "${APIS_ARRAY[*]}"
+  
+  # for api in "${APIS_ARRAY[@]}"; do
+  #     CLEANED="${api%$'\n'}"
+  #     echo "${CLEANED}" testing.... 
+  # done
+  
+  # validar se houver gdate no host (mac) usa, caso não, date (gnu).
+  # gdate -d '06/12/2012 07:21:22' + "%s"
+  #all:
+  SERVICE=$(echo ${args[SERVICE_NAME]})
+  START_DATE=$(echo ${args[START_TIME]})
+  START_WINDOW=${START_DATE/_/T}
+  START_EPOCH=$(gdate --date="$START_WINDOW" +%s)
+  END_DATE=$(echo ${args[END_TIME]})
+  END_WINDOW=${END_DATE/_/T}
+  END_EPOCH=$(gdate --date="$END_WINDOW" +%s)
+  
+  function generateid {
+      MAINTENANCEID=$(echo $RANDOM)
+  }
+  
+  generateid
+  
+  DATAINSTANA='{
+          "id": "'"$MAINTENANCEID"'",
+          "name": "testing creation",
+          "query": "entity.service.name='"$SERVICE"'",
+          "windows": [
+          {
+              "end": '"$END_EPOCH"'00,
+              "id": "'"$MAINTENANCEID"'",
+              "start": '"$START_EPOCH"'00
+          }
+          ]
+      }'
+  
+  function createmaintenancewindowinstana {
+      curl --compressed -s --request PUT \
+      --url https://xxxxxxxx.instana.io/api/settings/maintenance/$MAINTENANCEID \
+      -H "Content-Type: application/json; charset=utf-8" \
+      --header "authorization: apiToken $CONFIG_instana_apitoken" \
+          --data "$DATAINSTANA"
+  }
+  jq '.' <(createmaintenancewindowinstana)
+}
+
+# :command.function
+maintenance-window_create_site24x7_command() {
+  # :src/create_site24x7_command.sh
+  TOKEN=$(getacesstoken | cut -d "\"" -f 4)
+  
+  MONITOR=${args[SERVICE_NAME]}
+  START_DAY=$(cut -d '_' -f 1 <(echo "${args[START_TIME]}"))
+  START_HOUR=$(cut -d '_' -f 2 <(echo "${args[START_TIME]}"))
+  END_DAY=$(cut -d '_' -f 1 <(echo "${args[END_TIME]}"))
+  END_HOUR=$(cut -d '_' -f 2 <(echo "${args[END_TIME]}"))
+  
+  function searchmonitorid {
+      curl -s https://www.site24x7.com/api/monitors \
+      -H "Authorization: Zoho-oauthtoken $TOKEN" | jq -r '.data[] | "\(.display_name) =  \(.monitor_id)" ' | grep -i "$MONITOR" | cut -d '=' -f 2
+  }
+  
+  MONITORID=$(searchmonitorid | awk '{print $1}')
+  
+  
+  
+  DATA='{
+      "maintenance_type": 3,
+      "selection_type": 2,
+      "start_time": "'"$START_HOUR"'",
+      "end_time": "'"$END_HOUR"'",
+      "display_name": "Once maintenance",
+      "description": "Maintenance test",
+      "monitors": [
+          "'"$MONITORID"'"
+          ],
+      "start_date": "'"$START_DAY"'",
+      "end_date": "'"$END_DAY"'",
+      "perform_monitoring":true
+  }'
+  
+  function create24x7 {
+  curl -s --compressed  https://www.site24x7.com/api/maintenance \
+          -H "Content-Type: application/json;charset=UTF-8" \
+          -H "Accept: application/json; version=2.0" \
+          -H "Authorization: Zoho-oauthtoken $TOKEN" \
+          --data "$DATA"
+  }
+  
+  jq '.' <(create24x7)
+}
+
+# :command.function
+maintenance-window_create_zabbix_command() {
+  # :src/create_zabbix_command.sh
+  HOST=${args[SERVICE_NAME]}
+  START_DATE=$(echo ${args[START_TIME]})
+  START_WINDOW=${START_DATE/_/T}
+  START_EPOCH=$(gdate --date="$START_WINDOW" +%s)
+  END_DATE=$(echo ${args[END_TIME]})
+  END_WINDOW=${END_DATE/_/T}
+  END_EPOCH=$(gdate --date="$END_WINDOW" +%s)
+  
+  ZABBIXTOKEN=$(jq -r .result <(getlogintoken))
+  
+  # curl abaixo pode retornar uma lista!
+  function gethostid {
+      curl -s "$CONFIG_zabbix_url"/api_jsonrpc.php \
+              -H "Content-Type: application/json" \
+              --data '{
+                  "jsonrpc": "2.0",
+                  "method": "host.get",
+                  "params": {
+                      "output": [
+                              "hostid",
+                              "host"
+                      ],
+                      "selectInterfaces": [
+                              "interfaceid",
+                              "ip"
+                      ]
+                  },
+                  "id": 2,
+                  "auth": "'"$ZABBIXTOKEN"'"
+                  }' | jq -r '.result[] | "\(.hostid)=\(.host)" ' | grep -i $HOST | cut -d '=' -f 1
+  }
+  
+  # array:
+  HOSTID=( $(gethostid) )
+  HOSTIDGROUP=$(sed -E "s/([[:alnum:]]+)/\"&\"/g;s/ /,/g" <<< ${HOSTID[@]})
+  
+  DATAZABBIX='{
+              "jsonrpc": "2.0",
+              "method": "maintenance.create",
+              "params": {
+                  "name": "'"$HOST"'",
+                  "active_since": "'"$START_EPOCH"'",
+                  "active_till": "'"$END_EPOCH"'",
+                  "tags_evaltype": 0,
+                  "hostids": [
+                      '"$HOSTIDGROUP"'
+                  ],
+                  "timeperiods": [
+                      {
+                          "timeperiod_type": 0
+                      }
+                  ]
+              },
+              "auth": "'"$ZABBIXTOKEN"'",
+              "id": 1
+  }'
+  
+  function createzabbix {
+      curl -s "$CONFIG_zabbix_url"/api_jsonrpc.php \
+          -H "Content-Type: application/json" \
+          --data "$DATAZABBIX"
+  }
+  
+  jq '.' <(createzabbix)
+}
+
+# :command.function
+maintenance-window_delete_instana_command() {
+  # :src/delete_instana_command.sh
+  echo "# this file is located in 'src/delete_instana_command.sh'"
+  echo "# code for 'maintenance-window delete instana' goes here"
+  echo "# you can edit it freely and regenerate (it will not be overwritten)"
+  inspect_args
+}
+
+# :command.function
+maintenance-window_delete_site24x7_command() {
+  # :src/delete_site24x7_command.sh
+  echo "# this file is located in 'src/delete_site24x7_command.sh'"
+  echo "# code for 'maintenance-window delete site24x7' goes here"
+  echo "# you can edit it freely and regenerate (it will not be overwritten)"
+  inspect_args
+}
+
+# :command.function
+maintenance-window_delete_zabbix_command() {
+  # :src/delete_zabbix_command.sh
+  echo "# this file is located in 'src/delete_zabbix_command.sh'"
+  echo "# code for 'maintenance-window delete zabbix' goes here"
+  echo "# you can edit it freely and regenerate (it will not be overwritten)"
+  inspect_args
+}
+
+# :command.function
+maintenance-window_list_instana_command() {
+  # :src/list_instana_command.sh
+  function listinstana {
+      curl -s --compressed --request GET \
+      --url https://xxxxxxxx.instana.io/api/settings/maintenance \
+      --header "authorization: apiToken $CONFIG_instana_apitoken"
+  }
+  
+  jq '.' <(listinstana)
+}
+
+# :command.function
+maintenance-window_list_site24x7_command() {
+  # :src/list_site24x7_command.sh
+  TOKEN=$(getacesstoken | cut -d "\"" -f 4)
+  
+  function listsite24x7 {
+      curl -s https://www.site24x7.com/api/maintenance \
+      -H "Authorization: Zoho-oauthtoken $TOKEN"
+  }
+  
+  jq '.' <(listsite24x7)
+}
+
+# :command.function
+maintenance-window_list_zabbix_command() {
+  # :src/list_zabbix_command.sh
+  ZABBIXTOKEN=$(jq -r .result <(getlogintoken))
+  
+  DATA='{
+      "jsonrpc": "2.0",
+      "method": "maintenance.get",
+      "params": {
+          "output":  [
+                              "maintenanceid",
+                              "name",
+                              "description"
+                      ]
+      },
+      "auth": "'"$ZABBIXTOKEN"'",
+      "id": 1
+  }'
+  
+  function listzabbix {
+      curl -s "$CONFIG_zabbix_url"/api_jsonrpc.php \
+          -H "Content-Type: application/json" \
+          --data "$DATA"
+  }
+  
+  jq '.' <(listzabbix)
+}
+
+# :command.parse_requirements
+parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action=$1
+  
+  case $action in
+  -* )
+    ;;
+  
+  create | c )
+    action="create"
+    shift
+    maintenance-window_create_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  delete | d )
+    action="delete"
+    shift
+    maintenance-window_delete_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  list | ls )
+    action="list"
+    shift
+    maintenance-window_list_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  # :command.command_fallback
+  "" )
+    maintenance-window_usage
+    exit 1
+    ;;
+  
+  * )
+    if [[ -x "$(command -v "maintenance-window-$action")" ]]; then
+      shift
+      exec "maintenance-window-$action" "$@"
+    else
+      maintenance-window_usage
+      exit 1
+    fi
+  
+  esac
+  # :command.required_args_filter
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      printf "invalid argument: %s\n" "$key"
+      exit 1
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_create_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_create_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action=$1
+  
+  case $action in
+  -* )
+    ;;
+  
+  instana | i )
+    action="instana"
+    shift
+    maintenance-window_create_instana_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  site24x7 | s )
+    action="site24x7"
+    shift
+    maintenance-window_create_site24x7_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  zabbix | z )
+    action="zabbix"
+    shift
+    maintenance-window_create_zabbix_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  # :command.command_fallback
+  * )
+    maintenance-window_create_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.required_args_filter
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      printf "invalid argument: %s\n" "$key"
+      exit 1
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_create_instana_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_create_instana_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  export TESTE="${TESTE:-Esl1h-instana}"
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="create instana"
+  # :command.required_args_filter
+  if [[ $1 && $1 != -* ]]; then
+    args[SERVICE_NAME]=$1
+    shift
+  else
+    printf "missing required argument: SERVICE_NAME\nusage: maintenance-window create instana SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[START_TIME]=$1
+    shift
+  else
+    printf "missing required argument: START_TIME\nusage: maintenance-window create instana SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[END_TIME]=$1
+    shift
+  else
+    printf "missing required argument: END_TIME\nusage: maintenance-window create instana SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+    # :flag.case
+    --force | -f )
+      args[--force]=1
+      shift
+      ;;
+  
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      if [[ ! ${args[SERVICE_NAME]} ]]; then
+        args[SERVICE_NAME]=$1
+        shift
+      elif [[ ! ${args[START_TIME]} ]]; then
+        args[START_TIME]=$1
+        shift
+      elif [[ ! ${args[END_TIME]} ]]; then
+        args[END_TIME]=$1
+        shift
+      else
+        printf "invalid argument: %s\n" "$key"
+        exit 1
+      fi
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_create_site24x7_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_create_site24x7_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="create site24x7"
+  # :command.required_args_filter
+  if [[ $1 && $1 != -* ]]; then
+    args[SERVICE_NAME]=$1
+    shift
+  else
+    printf "missing required argument: SERVICE_NAME\nusage: maintenance-window create site24x7 SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[START_TIME]=$1
+    shift
+  else
+    printf "missing required argument: START_TIME\nusage: maintenance-window create site24x7 SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[END_TIME]=$1
+    shift
+  else
+    printf "missing required argument: END_TIME\nusage: maintenance-window create site24x7 SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+    # :flag.case
+    --force | -f )
+      args[--force]=1
+      shift
+      ;;
+  
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      if [[ ! ${args[SERVICE_NAME]} ]]; then
+        args[SERVICE_NAME]=$1
+        shift
+      elif [[ ! ${args[START_TIME]} ]]; then
+        args[START_TIME]=$1
+        shift
+      elif [[ ! ${args[END_TIME]} ]]; then
+        args[END_TIME]=$1
+        shift
+      else
+        printf "invalid argument: %s\n" "$key"
+        exit 1
+      fi
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_create_zabbix_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_create_zabbix_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="create zabbix"
+  # :command.required_args_filter
+  if [[ $1 && $1 != -* ]]; then
+    args[SERVICE_NAME]=$1
+    shift
+  else
+    printf "missing required argument: SERVICE_NAME\nusage: maintenance-window create zabbix SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[START_TIME]=$1
+    shift
+  else
+    printf "missing required argument: START_TIME\nusage: maintenance-window create zabbix SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[END_TIME]=$1
+    shift
+  else
+    printf "missing required argument: END_TIME\nusage: maintenance-window create zabbix SERVICE_NAME START_TIME END_TIME [options]\n"
+    exit 1
+  fi
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+    # :flag.case
+    --force | -f )
+      args[--force]=1
+      shift
+      ;;
+  
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      if [[ ! ${args[SERVICE_NAME]} ]]; then
+        args[SERVICE_NAME]=$1
+        shift
+      elif [[ ! ${args[START_TIME]} ]]; then
+        args[START_TIME]=$1
+        shift
+      elif [[ ! ${args[END_TIME]} ]]; then
+        args[END_TIME]=$1
+        shift
+      else
+        printf "invalid argument: %s\n" "$key"
+        exit 1
+      fi
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_delete_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_delete_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action=$1
+  
+  case $action in
+  -* )
+    ;;
+  
+  instana | i )
+    action="instana"
+    shift
+    maintenance-window_delete_instana_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  site24x7 | s )
+    action="site24x7"
+    shift
+    maintenance-window_delete_site24x7_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  zabbix | z )
+    action="zabbix"
+    shift
+    maintenance-window_delete_zabbix_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  # :command.command_fallback
+  * )
+    maintenance-window_delete_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.required_args_filter
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      printf "invalid argument: %s\n" "$key"
+      exit 1
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_delete_instana_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_delete_instana_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  export TESTE="${TESTE:-Esl1h-delete-instana}"
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="delete instana"
+  # :command.required_args_filter
+  if [[ $1 && $1 != -* ]]; then
+    args[SERVICE_NAME]=$1
+    shift
+  else
+    printf "missing required argument: SERVICE_NAME\nusage: maintenance-window delete instana SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[START_TIME]=$1
+    shift
+  else
+    printf "missing required argument: START_TIME\nusage: maintenance-window delete instana SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[END_TIME]=$1
+    shift
+  else
+    printf "missing required argument: END_TIME\nusage: maintenance-window delete instana SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      if [[ ! ${args[SERVICE_NAME]} ]]; then
+        args[SERVICE_NAME]=$1
+        shift
+      elif [[ ! ${args[START_TIME]} ]]; then
+        args[START_TIME]=$1
+        shift
+      elif [[ ! ${args[END_TIME]} ]]; then
+        args[END_TIME]=$1
+        shift
+      else
+        printf "invalid argument: %s\n" "$key"
+        exit 1
+      fi
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_delete_site24x7_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_delete_site24x7_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="delete site24x7"
+  # :command.required_args_filter
+  if [[ $1 && $1 != -* ]]; then
+    args[SERVICE_NAME]=$1
+    shift
+  else
+    printf "missing required argument: SERVICE_NAME\nusage: maintenance-window delete site24x7 SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[START_TIME]=$1
+    shift
+  else
+    printf "missing required argument: START_TIME\nusage: maintenance-window delete site24x7 SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[END_TIME]=$1
+    shift
+  else
+    printf "missing required argument: END_TIME\nusage: maintenance-window delete site24x7 SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      if [[ ! ${args[SERVICE_NAME]} ]]; then
+        args[SERVICE_NAME]=$1
+        shift
+      elif [[ ! ${args[START_TIME]} ]]; then
+        args[START_TIME]=$1
+        shift
+      elif [[ ! ${args[END_TIME]} ]]; then
+        args[END_TIME]=$1
+        shift
+      else
+        printf "invalid argument: %s\n" "$key"
+        exit 1
+      fi
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_delete_zabbix_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_delete_zabbix_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="delete zabbix"
+  # :command.required_args_filter
+  if [[ $1 && $1 != -* ]]; then
+    args[SERVICE_NAME]=$1
+    shift
+  else
+    printf "missing required argument: SERVICE_NAME\nusage: maintenance-window delete zabbix SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[START_TIME]=$1
+    shift
+  else
+    printf "missing required argument: START_TIME\nusage: maintenance-window delete zabbix SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  
+  if [[ $1 && $1 != -* ]]; then
+    args[END_TIME]=$1
+    shift
+  else
+    printf "missing required argument: END_TIME\nusage: maintenance-window delete zabbix SERVICE_NAME START_TIME END_TIME\n"
+    exit 1
+  fi
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      if [[ ! ${args[SERVICE_NAME]} ]]; then
+        args[SERVICE_NAME]=$1
+        shift
+      elif [[ ! ${args[START_TIME]} ]]; then
+        args[START_TIME]=$1
+        shift
+      elif [[ ! ${args[END_TIME]} ]]; then
+        args[END_TIME]=$1
+        shift
+      else
+        printf "invalid argument: %s\n" "$key"
+        exit 1
+      fi
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_list_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_list_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action=$1
+  
+  case $action in
+  -* )
+    ;;
+  
+  instana )
+    action="instana"
+    shift
+    maintenance-window_list_instana_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  site24x7 )
+    action="site24x7"
+    shift
+    maintenance-window_list_site24x7_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  zabbix )
+    action="zabbix"
+    shift
+    maintenance-window_list_zabbix_parse_requirements "$@"
+    shift $#
+    ;;    
+  
+  # :command.command_fallback
+  * )
+    maintenance-window_list_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.required_args_filter
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      printf "invalid argument: %s\n" "$key"
+      exit 1
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_list_instana_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_list_instana_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="list instana"
+  # :command.required_args_filter
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      printf "invalid argument: %s\n" "$key"
+      exit 1
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_list_site24x7_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_list_site24x7_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="list site24x7"
+  # :command.required_args_filter
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      printf "invalid argument: %s\n" "$key"
+      exit 1
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.parse_requirements
+maintenance-window_list_zabbix_parse_requirements() {
+  # :command.fixed_flag_filter
+  case "$1" in
+  --version | -v )
+    version_command
+    exit
+    ;;
+  
+  --help | -h )
+    long_usage=yes
+    maintenance-window_list_zabbix_usage
+    exit 1
+    ;;
+  
+  esac
+  # :command.environment_variables_filter
+  # :command.dependencies_filter
+  # :command.command_filter
+  action="list zabbix"
+  # :command.required_args_filter
+  # :command.required_flags_filter
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+  
+    -* )
+      printf "invalid option: %s\n" "$key"
+      exit 1
+      ;;
+  
+    * )
+      # :command.parse_requirements_case
+      printf "invalid argument: %s\n" "$key"
+      exit 1
+      ;;
+  
+    esac
+  done
+  # :command.default_assignments
+  # :command.whitelist_filter
+}
+
+# :command.initialize
+initialize() {
+  version="0.1.8"
+  long_usage=''
+  set -e
+
+  if [[ "${BASH_VERSINFO:-0}" -lt 4 ]]; then
+    printf "bash version 4 or higher is required\n"
+    exit 1
+  fi
+
+  # :src/initialize.sh
+  eval $(parse_yaml config.yml "CONFIG_")
+}
+
+# :command.run
+run() {
+  declare -A args
+  declare -a other_args
+  parse_requirements "$@"
+
+  if [[ $action == "create" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_create_usage
+    else
+      maintenance-window_create_command
+    fi
+  
+  elif [[ $action == "create instana" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_create_instana_usage
+    else
+      maintenance-window_create_instana_command
+    fi
+  
+  elif [[ $action == "create site24x7" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_create_site24x7_usage
+    else
+      maintenance-window_create_site24x7_command
+    fi
+  
+  elif [[ $action == "create zabbix" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_create_zabbix_usage
+    else
+      maintenance-window_create_zabbix_command
+    fi
+  
+  elif [[ $action == "delete" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_delete_usage
+    else
+      maintenance-window_delete_command
+    fi
+  
+  elif [[ $action == "delete instana" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_delete_instana_usage
+    else
+      maintenance-window_delete_instana_command
+    fi
+  
+  elif [[ $action == "delete site24x7" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_delete_site24x7_usage
+    else
+      maintenance-window_delete_site24x7_command
+    fi
+  
+  elif [[ $action == "delete zabbix" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_delete_zabbix_usage
+    else
+      maintenance-window_delete_zabbix_command
+    fi
+  
+  elif [[ $action == "list" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_list_usage
+    else
+      maintenance-window_list_command
+    fi
+  
+  elif [[ $action == "list instana" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_list_instana_usage
+    else
+      maintenance-window_list_instana_command
+    fi
+  
+  elif [[ $action == "list site24x7" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_list_site24x7_usage
+    else
+      maintenance-window_list_site24x7_command
+    fi
+  
+  elif [[ $action == "list zabbix" ]]; then
+    if [[ ${args[--help]} ]]; then
+      long_usage=yes
+      maintenance-window_list_zabbix_usage
+    else
+      maintenance-window_list_zabbix_command
+    fi
+  
+  elif [[ $action == "root" ]]; then
+    root_command
+  fi
+}
+
+initialize
+run "$@"
